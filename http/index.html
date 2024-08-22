@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Database</title>
+  <style>
+    body { font-family: Arial, sans-serif; box-sizing: border-box;}
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; }
+    input, button { width: 100%; padding: 10px; }
+    button { margin-top: 10px; }
+    code { display:block; margin-top: 20px; font-size: 10px; color: blue;}
+    .resources { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>JSON Database</h1>
+    <div class="form-group">
+      <label for="resourceId">Resource ID (for update/delete):</label>
+      <input type="text" id="resourceId">
+    </div>
+    <div class="form-group">
+      <label for="resourceData">Resource Data (JSON format):</label>
+      <input type="text" id="resourceData">
+    </div>
+
+    <p>Type in Console: </p>
+    <code>curl.exe -X POST http://localhost:3000/resources -H "Content-Type: application/json" -d '{\"name\":\"John\",\"age\":30}'</code>
+    <code>curl.exe -X PUT http://localhost:3000/resources -H "Content-Type: application/json" -d "{\"1724297627997\":{\"name\":\"John\",\"age\":31}}"</code>
+    <code>curl.exe -X DELETE http://localhost:3000/resources -H "Content-Type: application/json" -d "{\"1724297627997\":{}}"</code>
+    <code>curl.exe http://localhost:3000/resources</code>
+
+    <button onclick="createResource()">Create Resource</button>
+    <button onclick="updateResource()">Update Resource</button>
+    <button onclick="deleteResource()">Delete Resource</button>
+    <button onclick="getResources()">Get Resources</button>
+    <div class="resources" id="resources"></div>
+  </div>
+
+  <script>
+    const apiUrl = 'http://localhost:3000/resources';
+
+    function createResource() {
+      const data = document.getElementById('resourceData').value;
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data
+      })
+      /* IT MAKES THE STRINGIFIED JSON TO JSON OBJECT */
+      .then(response => response.json())
+      .then(data => alert(JSON.stringify(data)))
+      .catch(error => console.error('Error:', error));
+    }
+
+    function updateResource() {
+      const id = document.getElementById('resourceId').value;
+      const data = document.getElementById('resourceData').value;
+      fetch(apiUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...JSON.parse(data) })
+      })
+      .then(response => response.json())
+      .then(data => alert(JSON.stringify(data)))
+      .catch(error => console.error('Error:', error));
+    }
+
+    function deleteResource() {
+      const id = document.getElementById('resourceId').value;
+      fetch(apiUrl, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      })
+      .then(response => response.json())
+      .then(data => alert(JSON.stringify(data)))
+      .catch(error => console.error('Error:', error));
+    }
+
+    function getResources() {
+      fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const resourcesDiv = document.getElementById('resources');
+        resourcesDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
