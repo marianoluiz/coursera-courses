@@ -20,3 +20,6 @@ POST: {"email":"andysmith@gamil.com","firstName":"Andy","lastName":"Smith","DOB"
 
 localhost:5000/<email>
 PUT: {"DOB":"1/1/1989"}
+
+localhost:5000/<email>
+DELETE
