@@ -1,5 +1,7 @@
 # To-Do List Application
 
+This is a Lab activity for Module 2 of Coursera React course by IBM.
+
 ## What I Learned
 
 In this lab, I learned how to build a simple to-do list application using React. The key concepts covered include:
