@@ -1,5 +1,7 @@
 # React Data Fetching Application
 
+This is a Lab activity for Module 3 of Coursera React course by IBM.
+
 ## Overview
 
 In this project, I have created a React application that demonstrates data fetching using a custom React hook. The project includes a component named `FetchData` that retrieves and displays data from an API endpoint using the `useFetch` custom hook.
