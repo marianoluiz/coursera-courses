@@ -1,5 +1,7 @@
 ### API Overview
 
+Final project for IBM node_express course
+
 ###### Public Routes: These routes do not require authentication.
 
 - GET /: Fetch the list of books.
