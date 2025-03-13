@@ -1,4 +1,3 @@
-import React from 'react'
 import UseFetch from './UseFetch';
 import './FetchData.css'
 
