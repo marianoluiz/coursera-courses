@@ -1,3 +1,6 @@
+# About
+This is a Lab activity for Module 3 of Coursera node.js & express course by IBM.
+
 # Node.js
 
 [ ! -d 'mxpfu-nodejsLabs' ] && git clone https://github.com/ibm-developer-skills-network/mxpfu-nodejsLabs.git
