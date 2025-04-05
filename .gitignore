@@ -1,4 +1,4 @@
 .DS_Store
 node_modules
-
+.vscode
 CD220Labs/react_class_component/node_modules/public-encrypt/test/test_rsa_privkey.pem
