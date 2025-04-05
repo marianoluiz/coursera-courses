@@ -1,1 +1,0 @@
-This is a Lab activity for Module 1 of Coursera node.js + express course by IBM.
