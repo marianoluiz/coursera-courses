@@ -1,6 +1,4 @@
 # Pandas library for data manipulation and analysis.
-
-
 import pandas as pd
 
 # Define a dictionary with real data
@@ -22,6 +20,7 @@ new_df = df[['column 1']]
 new_df = df[['column 1', 'column 2']]
 
 print('\n',new_df)
+
 
 # Accessing Data with iloc and loc
 
@@ -47,7 +46,12 @@ print('\n loc[index, coln]: ', artist_value)
 # Slicing DataFrames
 
   # Assign the first two rows and the first three columns to a new variable
-z = df.iloc[0:2, 0:3]
+z = df_custom_index.iloc[0:2, 0:3]
+
+print("\n", z)
 
   # Using loc to select specific rows and columns
-z = df.loc[0:2, 'artist':'released']
+z = df_custom_index.loc['a':, 'column 1':]
+
+
+print("\n", z)
