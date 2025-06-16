@@ -6,8 +6,9 @@ CD220Labs/react_class_component/node_modules/public-encrypt/test/test_rsa_privke
 .vscode
 __pycache__
 
-.venv
 djangoenv
+venv
+migrations
 
 # python ignored:
 # Byte-compiled / optimized / DLL files

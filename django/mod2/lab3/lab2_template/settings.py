@@ -1,17 +1,17 @@
-# Postgre SQL
+# PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '-----------',
+        'NAME': 'django_course',
         'USER': '-----------',
-        'PASSWORD': '---',
-        'HOST': '-----------',
-        'PORT': '-----------',
+        'PASSWORD': '-----------',
+        'HOST': '------------',
+        'PORT': '5432',
     }
 }
 
 INSTALLED_APPS = (
-    'orm',
+    'crud',
 )
 
 SECRET_KEY = 'SECRET KEY for this Django Project'

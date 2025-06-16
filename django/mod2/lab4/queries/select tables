@@ -1,0 +1,12 @@
+select * from related_objects_enrollment;
+
+select * from related_objects_user;
+
+select * from related_objects_instructor;
+
+select * from related_objects_learner;
+
+select * from related_objects_course;
+select * from related_objects_course_instructors;
+
+select * from related_objects_enrollment;
