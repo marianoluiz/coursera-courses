@@ -5,6 +5,7 @@ CD220Labs/react_class_component/node_modules/public-encrypt/test/test_rsa_privke
 
 .vscode
 __pycache__
+__init__.py
 
 djangoenv
 venv
