@@ -1,0 +1,55 @@
+# MOD2 LAB: Intro to Kubernetes Object
+
+# This YAML is for a StatefulSet, which is used for:
+  # Apps that need to remember data (like databases)
+  # Pods that need fixed names and stable storage
+
+# Specifies the version of the Kubernetes API being used for this object
+apiVersion: apps/v1
+
+# Declares this object as a StatefulSet (used for managing stateful apps)
+kind: StatefulSet
+
+# Metadata information for this StatefulSet
+metadata:
+  name: my-statefulset  # Name of the StatefulSet (used to identify it)
+
+spec:
+  # The name of the headless service that governs the network identity of the StatefulSet
+  serviceName: "nginx"  # This service must already exist
+
+  # Number of desired Pods (replicas)
+  replicas: 3  # This means 3 pods will be created (nginx-0, nginx-1, nginx-2)
+
+  # How to find the Pods that belong to this StatefulSet
+      # Means: this StatefulSet will manage any pod with app: nginx.
+  selector:
+    matchLabels:
+      app: nginx  # Matches pods that have the label app=nginx
+
+  # Template for the Pods that will be created
+  # Each Pod will:
+      # Run an nginx container (from DockerHub)
+      # Expose port 80
+      # Be reachable using its stable DNS name (because of the headless service)
+  template:
+    metadata:
+      labels:
+        app: nginx  # The label given to the Pods (must match the selector above)
+    spec:
+      containers:
+      - name: nginx  # The name of the container
+        image: nginx  # The Docker image to run (in this case, the default nginx image)
+        ports:
+        - containerPort: 80  # The container will listen on port 80 (default HTTP port)
+          name: web  # This gives a name to the port for reference (optional)
+
+  # Persistent volume claim templates for storage (each Pod will get its own)
+  volumeClaimTemplates:
+  - metadata:
+      name: www  # Name of the volume claim (this is used inside the pod)
+    spec:
+      accessModes: [ "ReadWriteOnce" ]  # Only one node can mount the volume for read/write at a time
+      resources:
+        requests:
+          storage: 1Gi  # Each Pod will request 1Gi (1 gigabyte) of storage

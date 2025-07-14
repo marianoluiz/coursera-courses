@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  replicas: 1  # Number of pod replicas to run
+  selector:
+    matchLabels:
+      app: myapp  # Matches pods with this label
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%  # Max extra pods during update
+      maxUnavailable: 25%  # Max pods unavailable during update
+    type: RollingUpdate  # Update strategy for pods
+  template:
+    metadata:
+      labels:
+        app: myapp  # Label for pod identification
+    spec:
+      imagePullSecrets:  # Use existing icr secret for image pulling
+      - name: icr  # Name of the image pull secret
+      containers:
+      - image: us.icr.io/sn-labs-marianoluiz/myapp:v1  # Container image to use
+        imagePullPolicy: Always  # Always pull the latest image
+        name: myapp  # Container name
+        ports:
+        - containerPort: 3000  # Port the container exposes
+          name: http  # Name of the port
+        resources:
+          limits:
+            cpu: 50m  # Max CPU limit (50 milliCPU)
+          requests:
+            cpu: 20m  # Requested CPU (20 milliCPU)
+        env:                # remove if secret not applied yet
+        - name: MYAPP_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: myapp-secret
+              key: username
+        - name: MYAPP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: myapp-secret
+              key: password

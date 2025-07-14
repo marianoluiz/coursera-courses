@@ -1,0 +1,28 @@
+# MOD2 LAB: Intro to Kubernetes Object
+
+# Specifies the API version of Kubernetes used to create this object
+apiVersion: apps/v1
+
+# Declares the type of Kubernetes object — in this case, a DaemonSet
+kind: DaemonSet
+
+# Metadata about the DaemonSet
+metadata:
+  name: my-daemonset  # The name used to identify this DaemonSet
+
+spec:
+  # Defines how to select which Pods are managed by this DaemonSet
+  selector:
+    matchLabels:
+      name: my-daemonset  # This must match the label defined in the Pod template below
+
+  # Template for the Pods that will be created on each node
+  template:
+    metadata:
+      labels:
+        name: my-daemonset  # Label assigned to each Pod; must match the selector above
+
+    spec:
+      containers:
+      - name: my-daemonset  # Name of the container running inside each Pod
+        image: nginx        # Container image to use (nginx is pulled from Docker Hub)
