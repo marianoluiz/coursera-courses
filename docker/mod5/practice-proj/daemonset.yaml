@@ -1,0 +1,31 @@
+# apiVersion: apps/v1: This line specifies the Kubernetes API version that this YAML file adheres to.
+apiVersion: apps/v1
+
+# kind: DaemonSet: This line specifies the Kubernetes resource type being defined in this YAML file.
+kind: DaemonSet
+metadata:
+  name: myapp-daemonset
+  labels:
+    app: myapp
+
+# Define the selector for the DaemonSet.
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: us.icr.io/sn-labs-marianoluiz/myapp:v1
+        ports:
+        - containerPort: 3000
+          name: http
+
+      # define the specification for the containers within the pods. 
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule

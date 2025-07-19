@@ -1,0 +1,62 @@
+# Specifies the version of the Kubernetes API to use and the type of object (Deployment)
+apiVersion: apps/v1
+
+# Declares that this manifest defines a Deployment
+kind: Deployment
+
+# Metadata provides information like the name of the deployment and labels used for selection
+metadata:
+  name: myapp  # The name of the Deployment
+  labels:
+    app: myapp  # A label to identify this app; used by selectors
+
+spec:
+
+  # Specifies how many instances (Pods) of the app you want to run
+  replicas: 1
+
+  # Defines how the Deployment finds the Pods it manages — must match the labels in the Pod template
+  selector:
+    matchLabels:
+      app: myapp
+
+  # Strategy defines how updates are applied to Pods
+  strategy:
+    type: RollingUpdate  # Ensures zero downtime by gradually updating Pods
+    rollingUpdate:
+      maxSurge: 25%        # Allows 25% more Pods than desired during update
+      maxUnavailable: 25%  # Allows 25% of Pods to be unavailable during update
+
+  # The Pod template — what Pods will look like when created
+  template:
+    metadata:
+      labels:
+        app: myapp  # The label used to identify Pods created by this Deployment
+
+    spec:
+      # api key
+      imagePullSecrets:
+      - name: icr
+
+
+      # Defines the containers inside each Pod
+      containers:
+      - name: myapp  # Name of the container
+
+        # Docker image to be used for the container
+        image: us.icr.io/sn-labs-marianoluiz/myapp:v1
+
+        # Ensures Kubernetes always pulls the image, even if it exists locally
+        imagePullPolicy: Always
+        
+        # Exposes port 3000 from the container, named "http"
+        ports:
+        - containerPort: 3000
+          name: http
+
+        # Resource management: how much CPU the container *requests* and is *limited* to
+        resources:
+          limits:
+            cpu: 50m     # Max CPU the container can use (50 millicores = 0.05 cores)
+          requests:
+            cpu: 20m     # Guaranteed minimum CPU allocation (20 millicores = 0.02 cores)
